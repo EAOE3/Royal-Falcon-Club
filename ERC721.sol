@@ -360,7 +360,7 @@ contract ERC721 is ERC165, IERC721, IERC721Metadata {
     }
     
     function _transfer(address from, address to, uint256 tokenId) internal virtual {
-        require(ERC721.ownerOf(tokenId) == from, "ERC721: transfer of token that is not own");
+        require(_owners[tokenId] == from, "ERC721: transfer of token that is not own");
         require(to != address(0), "ERC721: transfer to the zero address");
 
         // Clear approvals from the previous owner
