@@ -269,6 +269,10 @@ contract ERC721 is ERC165, IERC721, IERC721Metadata {
         _whiteMinting = whiteMinting;
         _minting = publicMinting;
     }
+
+    function withdraw(address payable to, uint256 value) external Owner {
+        to.transfer(value);
+    }
  
     
     //User Functions======================================================================================================================================================
