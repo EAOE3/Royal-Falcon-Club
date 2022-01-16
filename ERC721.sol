@@ -1,7 +1,3 @@
-/**
- *Submitted for verification at Etherscan.io on 2021-12-17
-*/
-
 // SPDX-License-Identifier: MIT
 pragma solidity =0.7.6;
 
@@ -126,7 +122,6 @@ contract ERC721 is ERC165, IERC721, IERC721Metadata {
     string private _symbol = "RFC";
 
     mapping(uint256 => address) private _owners;
-    mapping(uint256 => string) private _uri;
     mapping(address => uint256) private _balances;
     mapping(uint256 => address) private _tokenApprovals;
     mapping(address => mapping(address => bool)) private _operatorApprovals;
@@ -135,7 +130,7 @@ contract ERC721 is ERC165, IERC721, IERC721Metadata {
 
     bool private _goldMinting = false;//if minting is on or off
     bool private _whiteMinting = false;//if minting is on or off
-    bool private _minting = false;//if minting is on or off
+    bool private _minting = true;//if minting is on or off
 
     uint256 private _goldPrice = 125000000000000000;
     uint256 private _whitePrice = 150000000000000000;
