@@ -126,8 +126,6 @@ contract ERC721 is ERC165, IERC721, IERC721Metadata {
     mapping(uint256 => address) private _tokenApprovals;
     mapping(address => mapping(address => bool)) private _operatorApprovals;
 
-    uint256 private _minted;
-
     bool private _goldMinting = false;//if minting is on or off
     bool private _whiteMinting = false;//if minting is on or off
     bool private _minting = true;//if minting is on or off
@@ -213,9 +211,6 @@ contract ERC721 is ERC165, IERC721, IERC721Metadata {
         publicMint = _minting;
     }
 
-    function minted() public view returns(uint256) {
-        return _minted;
-    }
     
     //Moderator Functions======================================================================================================================================================
 
@@ -332,6 +327,7 @@ contract ERC721 is ERC165, IERC721, IERC721Metadata {
     }
 
     function goldMint(uint256 amount) external payable {
+        require(_totalSupply + amount < 5050, "RFC: Insufficient Tokens");
         require(_goldMinting, "RFC: Minting Has Not Started Yet"); 
         require(_goldAccess[msg.sender], "RFC: Invalid Access"); 
         require(msg.value == _goldPrice * amount, "RFC: Wrong ETH Value");
@@ -340,6 +336,7 @@ contract ERC721 is ERC165, IERC721, IERC721Metadata {
     }
 
     function whiteMint(uint256 amount) external payable {
+        require(_totalSupply + amount < 5050, "RFC: Insufficient Tokens");
         require(_whiteMinting, "RFC: Minting Has Not Started Yet"); 
         require(_whiteAccess[msg.sender], "RFC: Invalid Access"); 
         require(msg.value == _whitePrice * amount, "RFC: Wrong ETH Value");
@@ -348,6 +345,7 @@ contract ERC721 is ERC165, IERC721, IERC721Metadata {
     }
 
     function mint(uint256 amount) external payable {
+        require(_totalSupply + amount < 5050, "RFC: Insufficient Tokens");
         require(_minting, "RFC: Minting Has Not Started Yet"); 
         require(msg.value == _whitePrice * amount, "RFC: Wrong ETH Value");
 
@@ -390,19 +388,15 @@ contract ERC721 is ERC165, IERC721, IERC721Metadata {
     }
 
     function _mint(address user, uint256 amount) internal {
-        require(_minted + amount < _totalSupply, "RFC: Insufficient Tokens");
-        
         _balances[msg.sender] += amount;
         
         for(uint256 t; t < amount; ++t) {
-            uint256 tokenId = _minted++;
+            uint256 tokenId = _totalSupply++;
             
             _owners[tokenId] = msg.sender;
                 
             emit Transfer(address(0), msg.sender, tokenId);
         }
-
-        _totalSupply += amount;
         
     }
 
