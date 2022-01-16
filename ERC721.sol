@@ -200,6 +200,22 @@ contract ERC721 is ERC165, IERC721, IERC721Metadata {
     function manager(address user) external view returns(bool) {
         return _manager[user];
     }
+
+    function prices() public view returns(uint256 goldPrice, uint256 whitePrice, uint256 publicPrice) {
+        goldPrice = _goldPrice;
+        whitePrice = _whitePrice;
+        publicPrice = _publicPrice;
+    }
+
+    function minting() public view returns(bool goldMint, bool whiteMint, bool publicMint) {
+        goldMint =_goldMinting;
+        whiteMint = _whiteMinting;
+        publicMint = _minting;
+    }
+
+    function minted() public view returns(uint256) {
+        return _minted;
+    }
     
     //Moderator Functions======================================================================================================================================================
 
